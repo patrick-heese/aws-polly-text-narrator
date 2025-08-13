@@ -45,18 +45,14 @@ To provision the required AWS infrastructure, deploy using **CloudFormation/SAM*
    npm install
    ```
    
-2. Navigate to the `cloudformation` folder:
+2. Navigate to the `cloudformation` folder, build, and deploy:
    ```bash
    cd cloudformation
-   ```
-   
-3. Build and deploy the SAM application:
-   ```bash
    sam build
    sam deploy --guided --capabilities CAPABILITY_NAMED_IAM
    ```
 
-4. Provide parameters when prompted (Stack Name, AWS Region, etc.).
+3. Provide parameters when prompted (Stack Name, AWS Region, etc.).
 
 ### **Terraform**
 1. Edit variables in `terraform.tfvars` and `variables.tf` to customize the deployment.
