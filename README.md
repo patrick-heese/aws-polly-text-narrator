@@ -130,7 +130,11 @@ aws-polly-text-narrator/
    **4a. Use the AWS CLI**, replacing `<YOUR_LAMBDA_FUNCTION_NAME>` with the actual function name:  
 
      ```bash
-     aws lambda invoke --function-name <LAMBDA_FUNCTION_NAME> --cli-binary-format raw-in-base64-out --payload file://payload.json response.json
+     aws cloudformation create-stack \
+     --stack-name rekognition-stack \
+     --template-body file://template.yaml \
+     --parameters file://params.json \
+     --capabilities CAPABILITY_NAMED_IAM
      ```
 
    **4b. Use the AWS Management Console:**
