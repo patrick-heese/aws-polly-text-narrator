@@ -1,5 +1,5 @@
 # AWS Polly Text Narrator Application
-A Node.js-based serverless application that uses **Amazon Polly** to convert text into high-quality speech and store the generated audio in **Amazon S3**. This project demonstrates text-to-speech (TTS) capabilities using AWS services, Infrastructure as Code with **AWS CloudFormation**, **AWS SAM**, and **Terraform**, as well as secure serverless deployment with **AWS IAM**. Users provide text input to a Lambda function, which synthesizes the audio via Polly and stores the `.mp3` file in S3 for download or playback.
+A Node.js-based serverless application that uses **Amazon Polly** to convert text into high-quality speech and store the generated audio in **Amazon S3**. This project demonstrates text-to-speech (TTS) capabilities using AWS services, Infrastructure as Code with **AWS SAM** and **Terraform**, as well as secure serverless deployment with **AWS IAM**. Users provide text input to a Lambda function, which synthesizes the audio via Polly and stores the `.mp3` file in S3 for download or playback.
 
 ## Architecture Overview
 ![Architecture Diagram](assets/architecture-diagram.png)  
@@ -24,7 +24,7 @@ A Node.js-based serverless application that uses **Amazon Polly** to convert tex
 - Supports selection of Polly’s voice models.
 - Stores audio files securely in Amazon S3.  
 - Serverless deployment for cost-efficiency and scalability.  
-- Infrastructure defined with both **CloudFormation/SAM** and **Terraform**.
+- Infrastructure defined with both **AWS SAM** and **Terraform**.
 
 ## Tech Stack
 - **Languages:** Node.js (JavaScript)  
@@ -36,9 +36,9 @@ A Node.js-based serverless application that uses **Amazon Polly** to convert tex
 > **Note:** All command-line examples use `bash` syntax highlighting to maximize compatibility and readability.  
 > If you are using PowerShell or Command Prompt on Windows, the commands remain the same but prompt styles may differ.
 
-To provision the required AWS infrastructure, deploy using **CloudFormation/SAM** or **Terraform** templates as included in this repository.
+To provision the required AWS infrastructure, deploy using **SAM** or **Terraform** templates as included in this repository.
 
-### **CloudFormation/SAM**
+### Option 1: **SAM**
 1. Install Lambda dependencies (only needed the first time or when dependencies change):
    ```bash
    cd ../src
@@ -54,8 +54,8 @@ To provision the required AWS infrastructure, deploy using **CloudFormation/SAM*
 
 3. Provide parameters when prompted (Stack Name, AWS Region, etc.).
 
-### **Terraform**
-1. Edit variables in `terraform.tfvars` and `variables.tf` to customize the deployment.
+### Option 2: **Terraform**
+1. Edit variables in `terraform.tfvars` and/or `variables.tf` to customize the deployment.
 
 2. Install Lambda dependencies (only needed the first time or when dependencies change):
    ```bash
@@ -79,7 +79,7 @@ aws-polly-text-narrator/
 ├── assets/                      # Images, diagrams, screenshots
 │   ├── architecture-diagram.png      # Project architecture
 │   └── sample-terminalresults.png    # Sample Lambda output
-├── cloudformation/              # AWS CloudFormation/SAM templates
+├── cloudformation/              # AWS SAM template
 │   └── template.yaml                 # Main SAM template
 ├── terraform/                   # Terraform templates
 │   ├── main.tf                       # Main Terraform config
@@ -87,7 +87,7 @@ aws-polly-text-narrator/
 │   ├── variables.tf                  # Variables definitions
 │   └── terraform.tfvars              # Sample variable values
 ├── src/                         # Lambda source code & dependencies
-│   ├── index.js                      # Lambda handler
+│   ├── index.js                      # Lambda function code
 │   ├── package.json                  # Dependencies manifest
 │   └── package-lock.json             # Dependency lock file
 ├── LICENSE                      # MIT License
@@ -102,10 +102,10 @@ aws-polly-text-narrator/
 
 ## How to Use
 
-1. **Deploy the infrastructure** using CloudFormation/SAM or Terraform.
+1. **Deploy the infrastructure** using SAM or Terraform.
 
 2. **Retrieve deployed resource names:**
-   - For **CloudFormation/SAM**, run:
+   - For **SAM**, run:
      ```bash
      aws cloudformation describe-stacks --stack-name <STACK_NAME> --query "Stacks[0].Outputs"
      ```
