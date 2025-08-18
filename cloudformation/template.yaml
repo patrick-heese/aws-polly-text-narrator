@@ -7,6 +7,8 @@ Globals:
     Timeout: 10
     Runtime: nodejs22.x
     MemorySize: 128
+    Tags:
+      Project: PollyTextNarrator
 
 Resources:
 
@@ -14,6 +16,8 @@ Resources:
     Type: AWS::S3::Bucket
     Properties:
       BucketName: !Sub "my-polly-audio-files-${AWS::AccountId}-${AWS::Region}"
+      Tags:
+        Project: PollyTextNarrator
 
   PollyNarratorRole:
     Type: AWS::IAM::Role
@@ -39,27 +43,41 @@ Resources:
                   - s3:GetObject
                   - s3:ListBucket
                 Resource:
-                  - !Sub "${PollyAudioBucket.Arn}"
+                  - !GetAtt PollyAudioBucket.Arn
                   - !Sub "${PollyAudioBucket.Arn}/*"
               - Effect: Allow
                 Action:
                   - polly:SynthesizeSpeech
                 Resource: "*"
+      Tags:
+        Project: PollyTextNarrator
 
   PollyNarratorFunction:
     Type: AWS::Serverless::Function
     Properties:
+      FunctionName: PollyNarratorFunction
       Handler: index.handler
       CodeUri: "../src/"
       Environment:
         Variables:
           BUCKET_NAME: !Ref PollyAudioBucket
       Role: !GetAtt PollyNarratorRole.Arn
+      Tags:
+        Project: PollyTextNarrator
 
 Outputs:
   FunctionName:
     Description: Name of the Polly Lambda Function
     Value: !Ref PollyNarratorFunction
+  FunctionArn:
+    Description: ARN of the Polly Lambda Function
+    Value: !GetAtt PollyNarratorFunction.Arn
   AudioBucketName:
     Description: S3 bucket where audio files are stored
     Value: !Ref PollyAudioBucket
+  AudioBucketArn:
+    Description: ARN of the S3 bucket
+    Value: !GetAtt PollyAudioBucket.Arn
+  LambdaRoleArn:
+    Description: ARN of the IAM role used by the Lambda
+    Value: !GetAtt PollyNarratorRole.Arn
