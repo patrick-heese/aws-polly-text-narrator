@@ -2,53 +2,45 @@ provider "aws" {
   region = var.aws_region
 }
 
-# Package Lambda code
 data "archive_file" "lambda_zip" {
   type        = "zip"
-  source_dir  = "../src"
+  source_dir  = "../src"       # Adjust relative path if needed
   output_path = "../src/function.zip"
 }
 
-# Account + region data for unique naming
-data "aws_caller_identity" "current" {}
-data "aws_region" "current" {}
-
+# S3 bucket with unique prefix
 resource "aws_s3_bucket" "polly_audio_bucket" {
-  bucket = "my-polly-audio-files-${data.aws_caller_identity.current.account_id}-${data.aws_region.current.name}"
+  bucket_prefix = "my-polly-audio-files-"
 
   tags = {
-    Name = "PollyAudioBucket"
+    Name    = "PollyAudioBucket"
     Project = "PollyTextNarrator"
   }
 }
 
-# Lambda execution role
+# IAM role for Lambda
 resource "aws_iam_role" "lambda_exec_role" {
   name = var.lambda_role_name
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17",
     Statement = [{
-      Action = "sts:AssumeRole",
       Effect = "Allow",
       Principal = {
         Service = "lambda.amazonaws.com"
-      }
+      },
+      Action = "sts:AssumeRole"
     }]
   })
-
-  tags = {
-    Project = "PollyTextNarrator"
-  }
 }
 
-# Attach AWS managed basic execution role
+# Attach AWS managed Lambda basic execution role (for logs)
 resource "aws_iam_role_policy_attachment" "lambda_basic_execution" {
   role       = aws_iam_role.lambda_exec_role.name
   policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
 }
 
-# Inline policy for S3 + Polly
+# Custom inline policy for S3 + Polly
 resource "aws_iam_role_policy" "lambda_policy" {
   name = "${var.lambda_role_name}-policy"
   role = aws_iam_role.lambda_exec_role.id
@@ -57,8 +49,8 @@ resource "aws_iam_role_policy" "lambda_policy" {
     Version = "2012-10-17",
     Statement = [
       {
-        Effect = "Allow",
-        Action = [
+        Effect   = "Allow",
+        Action   = [
           "s3:PutObject",
           "s3:GetObject",
           "s3:ListBucket"
@@ -69,8 +61,8 @@ resource "aws_iam_role_policy" "lambda_policy" {
         ]
       },
       {
-        Effect = "Allow",
-        Action = [
+        Effect   = "Allow",
+        Action   = [
           "polly:SynthesizeSpeech"
         ],
         Resource = "*"
@@ -88,6 +80,7 @@ resource "aws_lambda_function" "polly_narrator" {
   runtime          = "nodejs22.x"
   role             = aws_iam_role.lambda_exec_role.arn
 
+  # Match SAM defaults
   memory_size = 128
   timeout     = 10
 
@@ -95,9 +88,5 @@ resource "aws_lambda_function" "polly_narrator" {
     variables = {
       BUCKET_NAME = aws_s3_bucket.polly_audio_bucket.bucket
     }
-  }
-
-  tags = {
-    Project = "PollyTextNarrator"
   }
 }
