@@ -7,17 +7,14 @@ Globals:
     Timeout: 10
     Runtime: nodejs22.x
     MemorySize: 128
-    Tags:
-      Project: PollyTextNarrator
 
 Resources:
 
   PollyAudioBucket:
     Type: AWS::S3::Bucket
     Properties:
+      # Use prefix-based naming to let CloudFormation auto-append a unique suffix
       BucketName: !Sub "my-polly-audio-files-${AWS::AccountId}-${AWS::Region}"
-      Tags:
-        Project: PollyTextNarrator
 
   PollyNarratorRole:
     Type: AWS::IAM::Role
@@ -49,8 +46,6 @@ Resources:
                 Action:
                   - polly:SynthesizeSpeech
                 Resource: "*"
-      Tags:
-        Project: PollyTextNarrator
 
   PollyNarratorFunction:
     Type: AWS::Serverless::Function
@@ -58,12 +53,12 @@ Resources:
       FunctionName: PollyNarratorFunction
       Handler: index.handler
       CodeUri: "../src/"
+      MemorySize: 128
+      Timeout: 10
       Environment:
         Variables:
           BUCKET_NAME: !Ref PollyAudioBucket
       Role: !GetAtt PollyNarratorRole.Arn
-      Tags:
-        Project: PollyTextNarrator
 
 Outputs:
   FunctionName:
