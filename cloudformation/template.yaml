@@ -68,11 +68,14 @@ Outputs:
     Description: ARN of the Polly Lambda Function
     Value: !GetAtt PollyNarratorFunction.Arn
   AudioBucketName:
-    Description: S3 bucket where audio files are stored
+    Description: Name of the S3 bucket where audio files are stored
     Value: !Ref PollyAudioBucket
   AudioBucketArn:
-    Description: ARN of the S3 bucket
+    Description: ARN of the S3 bucket where audio files are stored
     Value: !GetAtt PollyAudioBucket.Arn
+  LambdaName:
+    Description: Name of the IAM role used by the Lambda Function
+    Value: !Ref PollyNarratorRole
   LambdaRoleArn:
-    Description: ARN of the IAM role used by the Lambda
+    Description: ARN of the IAM role used by the Lambda Function
     Value: !GetAtt PollyNarratorRole.Arn
