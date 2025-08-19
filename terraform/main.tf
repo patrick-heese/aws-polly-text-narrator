@@ -14,7 +14,6 @@ resource "aws_s3_bucket" "polly_audio_bucket" {
 
   tags = {
     Name    = "PollyAudioBucket"
-    Project = "PollyTextNarrator"
   }
 }
 
