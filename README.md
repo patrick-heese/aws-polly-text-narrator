@@ -104,26 +104,16 @@ aws-polly-text-narrator/
 
 1. **Deploy the infrastructure** using SAM or Terraform.
 
-2. **Retrieve deployed resource names:**
-   - For **SAM**, run:
-     ```bash
-     aws cloudformation describe-stacks --stack-name <STACK_NAME> --query "Stacks[0].Outputs"
-     ```
-   - For **Terraform**, check the output variables you defined or run:
-     ```bash
-     terraform output
-     ```
-
-3. **Create the payload file** `src/payload.json` with the following JSON format:
+2. **Create the payload file** `src/payload.json` with the following JSON:
    ```json
    {
      "text": "The text to be converted to Audio"
    }
    ```
 
-4. **Invoke the Lambda function**  
+3. **Invoke the Lambda function**  
 
-   **4a. Use the AWS CLI:**
+   **3a. Use the AWS CLI:**
 	 
      ```bash
      aws lambda invoke \
@@ -133,7 +123,7 @@ aws-polly-text-narrator/
 	 src/response.json
      ```
 
-   **4b. Use the AWS Management Console:**
+   **3b. Use the AWS Management Console:**
    - Navigate to **Lambda** and select the function.  
    - Select **Test**.
 	 - Select **Create new event**
@@ -141,7 +131,7 @@ aws-polly-text-narrator/
    - In Event JSON, enter the contents of the payload.json file.
    - Select **Test** in the upper right of the Test event dialog.
 
-5. **Check the S3 bucket** for the generated `.mp3` audio file. Download or play the file as needed.
+4. **Check the S3 bucket** for the generated `.mp3` audio file. Download or play the file as needed.
 
 ## Future Enhancements
 - **API Gateway Integration** – Provide a REST endpoint for text submissions.
