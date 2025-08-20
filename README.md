@@ -114,7 +114,7 @@ aws-polly-text-narrator/
      terraform output
      ```
 
-3. **Create a payload file** `payload.json` with the following JSON format:
+3. **Create the payload file** `src/payload.json` with the following JSON format:
    ```json
    {
      "text": "The text to be converted to Audio"
@@ -123,21 +123,23 @@ aws-polly-text-narrator/
 
 4. **Invoke the Lambda function**  
 
-   **4a. Use the AWS CLI**, replacing `<YOUR_LAMBDA_FUNCTION_NAME>` with the actual function name:  
-
+   **4a. Use the AWS CLI:**
+	 
      ```bash
-     aws cloudformation create-stack \
-     --stack-name rekognition-stack \
-     --template-body file://template.yaml \
-     --parameters file://params.json \
-     --capabilities CAPABILITY_NAMED_IAM
+     aws lambda invoke \
+	 --function-name PollyNarratorFunction \
+	 --invocation-type RequestResponse \
+	 --payload fileb://src/payload.json \
+	 src/response.json
      ```
 
    **4b. Use the AWS Management Console:**
    - Navigate to **Lambda** and select the function.  
-   - Click **Test** at the top right.  
-   - Configure a new Test event with the payload JSON file.  
-   - Run the test and check the execution results.  
+   - Select **Test**.
+	 - Select **Create new event**
+   - Enter an **Event name**.
+   - In Event JSON, enter the contents of the payload.json file.
+   - Select **Test** in the upper right of the Test event dialog.
 
 5. **Check the S3 bucket** for the generated `.mp3` audio file. Download or play the file as needed.
 
