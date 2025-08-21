@@ -71,7 +71,7 @@ To provision the required AWS infrastructure, deploy using **SAM** or **Terrafor
    terraform apply
    ```
 
-**Note:** Node.js 22.x or later with npm is required to deploy via CloudFormation/SAM. Ensure the AWS CLI is configured (`aws configure`) with credentials that have sufficient permissions to create **S3 buckets**, **deploy Lambda functions**, interact with **Amazon Polly**, and manage **IAM roles**.
+**Note:** Node.js 22.x or later with npm is required to deploy via CloudFormation/SAM. Ensure the AWS CLI is configured (`aws configure`) with credentials that have sufficient permissions to create **S3 buckets**, deploy **Lambda functions**, interact with **Amazon Polly**, and manage **IAM roles**.
 
 ## Project Structure
 ```plaintext
@@ -86,10 +86,13 @@ aws-polly-text-narrator/
 │   ├── outputs.tf					  # Outputs definitions
 │   ├── variables.tf                  # Variables definitions
 │   └── terraform.tfvars              # Sample variable values
-├── src/                         # Lambda source code & dependencies
-│   ├── index.js                      # Lambda function code
-│   ├── package.json                  # Dependencies manifest
-│   └── package-lock.json             # Dependency lock file
+├── src/                         # Lambda source code, dependencies, and events
+│   ├── polly_function/				  # Lambda function
+│   │   ├── index.js                      # Lambda function code
+│	│   ├── package.json                  # Dependencies manifest
+│	│   └── package-lock.json             # Dependency lock 
+│   ├── events/						  # Lambda invoke event
+│   │   └── payload.json                  # Event payload
 ├── LICENSE                      # MIT License
 ├── README.md                    # Project documentation
 └── .gitignore                   # Git ignored files
@@ -104,7 +107,7 @@ aws-polly-text-narrator/
 
 1. **Deploy the infrastructure** using SAM or Terraform.
 
-2. **Create the payload file** `src/payload.json` with the following JSON:
+2. **Edit the payload file** `src/events/payload.json` with the desired output:
    ```json
    {
      "text": "The text to be converted to Audio"
@@ -119,8 +122,8 @@ aws-polly-text-narrator/
      aws lambda invoke \
 	 --function-name PollyNarratorFunction \
 	 --invocation-type RequestResponse \
-	 --payload fileb://src/payload.json \
-	 src/response.json
+	 --payload fileb://src/events/payload.json \
+	 src/events/response.json
      ```
 
    **3b. Use the AWS Management Console:**
@@ -144,7 +147,13 @@ This project is licensed under the [MIT License](LICENSE).
 
 ---
 
-### Author
+## Author
 **Patrick Heese**  
 Cloud Administrator | Aspiring Cloud Engineer/Architect  
 [LinkedIn Profile](https://www.linkedin.com/in/patrick-heese/) | [GitHub Profile](https://github.com/patrick-heese)
+
+## Acknowledgments
+This project was inspired by a course from [techwithlucy](https://github.com/techwithlucy).  
+The Lambda function code is taken directly from the author's original implementation.  
+All Infrastructure-as-Code (CloudFormation, SAM, Terraform) and documentation were designed and developed by me.  
+The architecture diagram included here is my own version, adapted from the original course diagram.  
