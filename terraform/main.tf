@@ -4,8 +4,8 @@ provider "aws" {
 
 data "archive_file" "lambda_zip" {
   type        = "zip"
-  source_dir  = "../src"       # Adjust relative path if needed
-  output_path = "../src/function.zip"
+  source_dir  = "../src/polly_function"       # Adjust relative path if needed
+  output_path = "../src/polly_function/function.zip"
 }
 
 # S3 bucket with unique prefix
