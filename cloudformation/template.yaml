@@ -52,7 +52,7 @@ Resources:
     Properties:
       FunctionName: PollyNarratorFunction
       Handler: index.handler
-      CodeUri: "../src/"
+      CodeUri: "../src/polly_function/"
       MemorySize: 128
       Timeout: 10
       Environment:
