@@ -87,12 +87,12 @@ aws-polly-text-narrator/
 │   ├── variables.tf                  # Variables definitions
 │   └── terraform.tfvars              # Sample variable values
 ├── src/                         # Lambda source code, dependencies, and events
-│   ├── polly_function/				  # Lambda function
-│   │   ├── index.js                      # Lambda function code
-│	│   ├── package.json                  # Dependencies manifest
-│	│   └── package-lock.json             # Dependency lock 
-│   ├── events/						  # Lambda invoke event
-│   │   └── payload.json                  # Event payload
+│   ├── polly_function/		          # Lambda function
+│   │   ├── index.js                       # Lambda function code
+│	│   ├── package.json                   # Dependencies manifest
+│	│   └── package-lock.json              # Dependency lock 
+│   ├── events/				          # Lambda invoke event
+│   │   └── payload.json                   # Event payload
 ├── LICENSE                      # MIT License
 ├── README.md                    # Project documentation
 └── .gitignore                   # Git ignored files
