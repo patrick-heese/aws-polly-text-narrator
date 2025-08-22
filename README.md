@@ -88,14 +88,14 @@ aws-polly-text-narrator/
 │   └── terraform.tfvars              # Sample variable values
 ├── src/                         # Lambda source code, dependencies, and events
 │   ├── polly_function/		          # Lambda function
-│   │   ├── index.js                       # Lambda function code
-│	│   ├── package.json                   # Dependencies manifest
-│	│   └── package-lock.json              # Dependency lock 
-│   ├── events/				          # Lambda invoke event
-│   │   └── payload.json                   # Event payload
-├── LICENSE                      # MIT License
-├── README.md                    # Project documentation
-└── .gitignore                   # Git ignored files
+│   │   ├── index.js                       
+│	│   ├── package.json                   
+│	│   └── package-lock.json              
+│   └── events/				          # Lambda test events
+│       └── event.json                     
+├── LICENSE                      
+├── README.md                    
+└── .gitignore                   
 ```
 
 ## Screenshot
@@ -107,7 +107,7 @@ aws-polly-text-narrator/
 
 1. **Deploy the infrastructure** using SAM or Terraform.
 
-2. **Edit the payload file** `src/events/payload.json` with the desired output:
+2. **Edit the event file** `src/events/event.json` with the desired output:
    ```json
    {
      "text": "The text to be converted to Audio"
@@ -122,7 +122,7 @@ aws-polly-text-narrator/
      aws lambda invoke \
 	 --function-name PollyNarratorFunction \
 	 --invocation-type RequestResponse \
-	 --payload fileb://src/events/payload.json \
+	 --payload fileb://src/events/event.json \
 	 src/events/response.json
      ```
 
@@ -131,7 +131,7 @@ aws-polly-text-narrator/
    - Select **Test**.
 	 - Select **Create new event**
    - Enter an **Event name**.
-   - In Event JSON, enter the contents of the payload.json file.
+   - In Event JSON, enter the contents of the event.json file.
    - Select **Test** in the upper right of the Test event dialog.
 
 4. **Check the S3 bucket** for the generated `.mp3` audio file. Download or play the file as needed.
