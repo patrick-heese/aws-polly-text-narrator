@@ -83,8 +83,8 @@ aws-polly-text-narrator/
 │   └── template.yaml                 # Main SAM template
 ├── terraform/                   # Terraform templates
 │   ├── main.tf                       # Main Terraform config
-│   ├── outputs.tf					  # Outputs definitions
-│   ├── variables.tf                  # Variables definitions
+│   ├── outputs.tf					  # Output definitions
+│   ├── variables.tf                  # Variable definitions
 │   └── terraform.tfvars              # Sample variable values
 ├── src/                         # Lambda source code, dependencies, and events
 │   ├── polly_function/		          # Lambda function
