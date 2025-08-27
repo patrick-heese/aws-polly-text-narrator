@@ -157,5 +157,5 @@ Cloud Administrator | Aspiring Cloud Engineer/Architect
 ## Acknowledgments
 This project was inspired by a course from [techwithlucy](https://github.com/techwithlucy).  
 The Lambda function code is taken directly from the author's original implementation.  
-All Infrastructure-as-Code (CloudFormation, SAM, Terraform) and documentation were designed and developed by me.  
 The architecture diagram included here is my own version, adapted from the original course diagram.  
+I designed and developed all Infrastructure-as-Code (CloudFormation, SAM, Terraform) and project documentation.  
