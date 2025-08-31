@@ -73,6 +73,38 @@ To provision the required AWS infrastructure, deploy using **SAM** or **Terrafor
 
 **Note:** Node.js 22.x or later with npm is required to deploy via CloudFormation/SAM. Ensure the AWS CLI is configured (`aws configure`) with credentials that have sufficient permissions to create **S3 buckets**, deploy **Lambda functions**, interact with **Amazon Polly**, and manage **IAM roles**.
 
+## How to Use
+1. **Deploy the infrastructure** using SAM or Terraform.
+
+2. **Edit the event file** `src/events/event.json` with the desired output:
+   ```json
+   {
+     "text": "The text to be converted to Audio"
+   }
+   ```
+
+3. **Invoke the Lambda function**  
+
+   **3a. Use the AWS CLI:**
+	 
+     ```bash
+     aws lambda invoke \
+	 --function-name PollyNarratorFunction \
+	 --invocation-type RequestResponse \
+	 --payload fileb://src/events/event.json \
+	 src/events/response.json
+     ```
+
+   **3b. Use the AWS Management Console:**
+   - Navigate to **Lambda** and select the function.  
+   - Select **Test**.
+	 - Select **Create new event**
+   - Enter an **Event name**.
+   - In Event JSON, enter the contents of the event.json file.
+   - Select **Test** in the upper right of the Test event dialog.
+
+4. **Check the S3 bucket** for the generated `.mp3` audio file. Download or play the file as needed.
+
 ## Project Structure
 ```plaintext
 aws-polly-text-narrator/
@@ -104,39 +136,6 @@ aws-polly-text-narrator/
 ![Labeled Output](assets/sample-terminalresults.png)
 
 *Figure 2: Example Lambda invocation output showing generated audio file key.*
-
-## How to Use
-
-1. **Deploy the infrastructure** using SAM or Terraform.
-
-2. **Edit the event file** `src/events/event.json` with the desired output:
-   ```json
-   {
-     "text": "The text to be converted to Audio"
-   }
-   ```
-
-3. **Invoke the Lambda function**  
-
-   **3a. Use the AWS CLI:**
-	 
-     ```bash
-     aws lambda invoke \
-	 --function-name PollyNarratorFunction \
-	 --invocation-type RequestResponse \
-	 --payload fileb://src/events/event.json \
-	 src/events/response.json
-     ```
-
-   **3b. Use the AWS Management Console:**
-   - Navigate to **Lambda** and select the function.  
-   - Select **Test**.
-	 - Select **Create new event**
-   - Enter an **Event name**.
-   - In Event JSON, enter the contents of the event.json file.
-   - Select **Test** in the upper right of the Test event dialog.
-
-4. **Check the S3 bucket** for the generated `.mp3` audio file. Download or play the file as needed.
 
 ## Future Enhancements
 - **API Gateway Integration** – Provide a REST endpoint for text submissions.
