@@ -27,7 +27,7 @@ A Node.js-based serverless application that uses **Amazon Polly** to convert tex
 - Infrastructure defined with both **AWS SAM** and **Terraform**.
 
 ## Tech Stack
-- **Languages:** Node.js (JavaScript)  
+- **Languages:** Node.js 22.18 (JavaScript)   
 - **AWS Services:** Lambda, Polly, S3, IAM  
 - **IaC Tools:** CloudFormation, AWS SAM, Terraform  
 - **Other Tools:** AWS CLI
