@@ -108,19 +108,19 @@ To provision the required AWS infrastructure, deploy using **SAM** or **Terrafor
 ## Project Structure
 ```plaintext
 aws-polly-text-narrator/
-├── assets/                      # Images, diagrams, screenshots
+├── assets/                      	  # Images, diagrams, screenshots
 │   ├── architecture-diagram.png      # Project architecture
 │   └── sample-terminalresults.png    # Sample Lambda output
-├── cloudformation/              # AWS SAM template
+├── cloudformation/                   # AWS SAM template
 │   └── template.yaml                 # Main SAM template
-├── terraform/                   # Terraform templates
+├── terraform/                        # Terraform templates
 │   ├── main.tf                       # Main Terraform config
 │   ├── variables.tf                  # Input variables
 │   ├── outputs.tf					  # Exported values
 │   ├── terraform.tfvars              # Default variable values
 │   ├── providers.tf			      # AWS provider definition
 │   └── versions.tf					  # Terraform version constraint
-├── src/                         # Lambda source code, dependencies, and events
+├── src/                              # Lambda source code, dependencies, and events
 │   ├── polly_function/		          # Lambda function
 │   │   ├── index.js                       
 │	│   ├── package.json                   
