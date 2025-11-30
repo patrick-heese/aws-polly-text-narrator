@@ -1,6 +1,6 @@
 data "archive_file" "lambda_zip" {
   type        = "zip"
-  source_dir  = "../src/polly_function"       # Adjust relative path if needed
+  source_dir  = "../src/polly_function" # Adjust relative path if needed
   output_path = "../src/polly_function/function.zip"
 }
 
@@ -9,7 +9,7 @@ resource "aws_s3_bucket" "polly_audio_bucket" {
   bucket_prefix = "my-polly-audio-files-"
 
   tags = {
-    Name    = "PollyAudioBucket"
+    Name = "PollyAudioBucket"
   }
 }
 
@@ -44,8 +44,8 @@ resource "aws_iam_role_policy" "lambda_policy" {
     Version = "2012-10-17",
     Statement = [
       {
-        Effect   = "Allow",
-        Action   = [
+        Effect = "Allow",
+        Action = [
           "s3:PutObject",
           "s3:GetObject",
           "s3:ListBucket"
@@ -56,8 +56,8 @@ resource "aws_iam_role_policy" "lambda_policy" {
         ]
       },
       {
-        Effect   = "Allow",
-        Action   = [
+        Effect = "Allow",
+        Action = [
           "polly:SynthesizeSpeech"
         ],
         Resource = "*"

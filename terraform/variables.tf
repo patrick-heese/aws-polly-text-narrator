@@ -15,3 +15,8 @@ variable "lambda_function_name" {
   type        = string
   default     = "PollyNarratorFunction"
 }
+
+variable "project_name" {
+  description = "Project tag value for all resources"
+  type        = string
+}
